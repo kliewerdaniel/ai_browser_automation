@@ -7,8 +7,9 @@ import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
-# Import task manager
+# Import task manager and browser API
 from task_manager import task_manager
+from browser_api import browser_api
 
 # Configure logging
 logging.basicConfig(
@@ -20,6 +21,9 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains on all routes
+
+# Register blueprints
+app.register_blueprint(browser_api, url_prefix='/api/browser')
 
 @app.route('/api/test', methods=['GET'])
 def test_connection():
