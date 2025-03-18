@@ -8,9 +8,9 @@ import threading
 import time
 from enum import Enum
 
-# Import automation modules (in future iterations)
-# from ..automation.browser_automation import BrowserAutomation
-# from ..automation.ai_processor import AIProcessor
+# Import automation modules
+from automation.browser_automation import BrowserAutomation
+from automation.ai_processor import AIProcessor
 
 # Configure logging
 logging.basicConfig(
@@ -168,36 +168,112 @@ class TaskManager:
         try:
             logger.info(f"Executing task {task_id}")
             
-            # In future iterations with actual implementations:
-            # browser = BrowserAutomation()
-            # ai_processor = AIProcessor()
+            # Initialize automation components
+            browser = BrowserAutomation(headless=True)
+            ai_processor = AIProcessor()
             
             # Navigate to URL
-            # browser.navigate_to_url(task.url)
+            if not browser.navigate_to_url(task.url):
+                raise Exception(f"Failed to navigate to URL: {task.url}")
             
-            # Extract data based on task type
-            # if task.task_type == "web_scrape":
-            #     data = browser.extract_data({
-            #         "main_content": "main",
-            #         "title": "h1",
-            #         "paragraphs": "p"
-            #     })
-            # 
-            #     # Process with AI
-            #     summary = ai_processor.summarize_text(data["main_content"])
-            #     
-            #     # Store result
-            #     task.result = {
-            #         "title": data["title"],
-            #         "summary": summary
-            #     }
+            result = {}
             
-            # Mock execution for now
-            time.sleep(2)  # Simulate processing time
-            task.result = {
-                "title": f"Sample title for {task.url}",
-                "summary": f"This is a mock summary for the task with description: {task.description}"
-            }
+            # Handle different task types
+            if task.task_type == "web_scrape":
+                # Extract basic web page data
+                data = browser.extract_data({
+                    "main_content": "main, body",
+                    "title": "h1, title",
+                    "paragraphs": "p"
+                })
+                
+                # Process with AI
+                if "main_content" in data and data["main_content"]:
+                    summary = ai_processor.summarize_text(data["main_content"])
+                    result = {
+                        "title": data.get("title", "No title found"),
+                        "summary": summary
+                    }
+                else:
+                    result = {
+                        "title": data.get("title", "No title found"),
+                        "error": "Could not extract main content"
+                    }
+                
+            elif task.task_type == "form_fill":
+                # Parse form data from description
+                try:
+                    # Expecting description in format: "field1=value1,field2=value2"
+                    form_data = {}
+                    if "," in task.description:
+                        for field_data in task.description.split(","):
+                            if "=" in field_data:
+                                field, value = field_data.split("=", 1)
+                                form_data[field.strip()] = value.strip()
+                    
+                    # Fill the form with the provided data
+                    if form_data:
+                        success = browser.fill_form(form_data)
+                        result = {
+                            "success": success,
+                            "message": "Form filled successfully" if success else "Failed to fill form"
+                        }
+                    else:
+                        result = {
+                            "success": False,
+                            "message": "No valid form data found in description"
+                        }
+                except Exception as form_error:
+                    result = {
+                        "success": False,
+                        "message": f"Form fill error: {str(form_error)}"
+                    }
+                
+            elif task.task_type == "data_extraction":
+                # Extract specific data based on the description
+                try:
+                    # Get the content and categorize it
+                    data = browser.extract_data({
+                        "main_content": "main, body",
+                        "title": "h1, title"
+                    })
+                    
+                    categories = ai_processor.categorize_content(data.get("main_content", ""))
+                    
+                    # Extract information based on the primary category
+                    if "primary_category" in categories:
+                        info_type = categories["primary_category"]
+                        extracted_info = ai_processor.extract_key_information(
+                            data.get("main_content", ""),
+                            info_type
+                        )
+                        
+                        result = {
+                            "title": data.get("title", "No title found"),
+                            "category": info_type,
+                            "extracted_information": extracted_info
+                        }
+                    else:
+                        result = {
+                            "title": data.get("title", "No title found"),
+                            "message": "Could not determine content category"
+                        }
+                except Exception as extract_error:
+                    result = {
+                        "success": False,
+                        "message": f"Data extraction error: {str(extract_error)}"
+                    }
+            else:
+                # Unknown task type
+                result = {
+                    "error": f"Unknown task type: {task.task_type}"
+                }
+            
+            # Close the browser
+            browser.close()
+            
+            # Store result
+            task.result = result
             
             task.update_status(TaskStatus.COMPLETED)
             logger.info(f"Completed task {task_id}")

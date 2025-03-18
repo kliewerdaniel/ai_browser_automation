@@ -44,13 +44,17 @@ This application automates repetitive web tasks by leveraging browser automation
 
 1. **Start the Flask server**
    ```bash
-   cd backend
-   python app.py
+   cd ai_browser_automation  # Make sure you're in the project root directory
+   python -m backend.app     # Run as a module to avoid import errors
+   
+   # Alternatively, you can run it directly from the backend directory:
+   # cd ai_browser_automation/backend
+   # python app.py
    ```
 
 2. **Access the web interface**
    
-   Open your browser and navigate to: `http://localhost:5000`
+   Open your browser and navigate to: `http://localhost:5001`
 
 ## Usage
 

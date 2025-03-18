@@ -5,13 +5,26 @@ flask-cors>=3.0.10
 # For HTTP requests
 requests>=2.26.0
 
-# Browser-Use library for web automation
-# This is a placeholder - replace with actual package name and version
-# browser-use>=1.0.0
+# Browser automation
+selenium>=4.1.0
+webdriver-manager>=3.8.5  # For managing browser drivers
 
-# For integration with Ollama
-# This is a placeholder - replace with actual package name and version
-# ollama-sdk>=1.0.0
+# Web parsing and data extraction
+beautifulsoup4>=4.11.1
+lxml>=4.9.2
+
+# For AI text processing and summarization
+# Note: These libraries are optional and the system will use fallback methods if they're not available
+nltk>=3.6.0  # Natural Language Toolkit
+scikit-learn>=1.0.0  # For text categorization
+
+# Optional but recommended for better performance:
+# transformers>=4.20.0  # Hugging Face Transformers
+# torch>=1.10.0  # PyTorch for running models
+
+# For environment variables management
+python-dotenv>=0.20.0
 
 # Testing
 pytest>=6.2.5
+pytest-mock>=3.8.0

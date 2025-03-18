@@ -1,69 +1,50 @@
-# Python
+# Python bytecode
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 
-# Virtual Environment
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
 venv/
 env/
 ENV/
 
-# Flask
-instance/
-.webassets-cache
-
-# Pytest
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Logs
-*.log
-
-# Environment variables
+# Environment files
 .env
 .env.local
-.env.development
-.env.test
-.env.production
 
-# IDEs and editors
+# IDE files
 .idea/
 .vscode/
-*.swp
-*.swo
-*~
-.project
-.classpath
-.c9/
-*.launch
-.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Logs
+logs/
+*.log
 
 # OS-specific files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# Project specific
-# Add any project-specific files to ignore
+# Application-specific data
+*.db
+*.sqlite3
