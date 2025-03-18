@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 # Import task manager
-from .task_manager import task_manager
+from task_manager import task_manager
 
 # Configure logging
 logging.basicConfig(

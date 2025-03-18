@@ -48,3 +48,67 @@ Thumbs.db
 # Application-specific data
 *.db
 *.sqlite3
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# React
+build/
+# Next.js
+.next/
+# Nuxt.js
+.nuxt/
+# Vue.js
+dist/
+# Angular
+dist/
+# Svelte
+__sapper__/
+# Gatsby
+public/
+.cache/
+# Gridsome
+dist/
+.cache/
+# Docusaurus
+build/
+# Hugo
+public/
+# Jekyll
+_site/
+# Hexo
+public/
+# VuePress
+.vuepress/dist/
+# Sphinx
+_build/
+# MkDocs
+site/
+# Jupyter Book
+_site/
+# MkDocs Material
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/
+# MkDocs Material for MkDocs
+.site/

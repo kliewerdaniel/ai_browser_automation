@@ -196,3 +196,4 @@ class BrowserAutomation:
             self.driver.quit()
         except Exception as e:
             logger.error(f"Error closing browser: {str(e)}")
+
